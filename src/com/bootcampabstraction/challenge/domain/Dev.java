@@ -1,7 +1,9 @@
 package com.bootcampabstraction.challenge.domain;
 
+import javax.swing.text.html.Option;
 import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 public class Dev {
@@ -9,9 +11,26 @@ public class Dev {
     private Set<Content> subscribedContents = new LinkedHashSet<>();
     private Set<Content> finishedContents = new LinkedHashSet<>();
 
-    public void subscribeBootcamp(Bootcamp bootcamp){}
-    public void advance(){}
-    public void calculateXp(){}
+    public void subscribeBootcamp(Bootcamp bootcamp){
+        this.subscribedContents.addAll(bootcamp.getContent());
+    }
+
+    public void advance(){
+        Optional<Content> content = this.subscribedContents.stream().findFirst();
+        if (content.isPresent()) {
+            this.finishedContents.add(content.get());
+            this.subscribedContents.remove(content.get());
+        } else {
+            System.err.println("Você não está inscrito em bootcamps ou mentorias!");
+        }
+    }
+
+    public double calculateXp(){
+        return this.finishedContents
+                .stream()
+                .mapToDouble(Content::calculateXp)
+                .sum();
+    }
 
     public String getName() {
         return name;
