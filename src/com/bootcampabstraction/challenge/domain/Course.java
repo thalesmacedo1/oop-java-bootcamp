@@ -1,24 +1,11 @@
 package com.bootcampabstraction.challenge.domain;
 
-public class Course {
-    private String title;
-    private String description;
+public class Course extends Content{
     private int duration;
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    @Override
+    public double calculateXp() {
+        return DEFAULT_XP * duration;
     }
 
     public int getDuration() {
@@ -32,9 +19,10 @@ public class Course {
     @Override
     public String toString() {
         return "Course{" +
-                "title='" + title + '\'' +
-                ", description='" + description + '\'' +
+                "title='" + getTitle() + '\'' +
+                ", description='" + getDescription() + '\'' +
                 ", duration=" + duration +
                 '}';
     }
+
 }
